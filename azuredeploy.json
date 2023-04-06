@@ -25,6 +25,7 @@
   },
   "variables": {
     "nicName": "nic-hashcat-cybersec",
+    "nsgname": "nsg-hashcat-cybersec",
     "addressPrefix": "192.168.2.0/23",
     "subnetName": "Subnet",
     "subnetPrefix": "192.168.2.0/24",
@@ -72,7 +73,7 @@
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
-        "[concat('Microsoft.Network/networkSecurityGroups/', 'nsg-hashcat-cybersec')]"
+        "[concat('Microsoft.Network/networkSecurityGroups/', variables('nsgname'))]"
       ],
       "properties": {
         "ipConfigurations": [
@@ -90,14 +91,14 @@
           }
         ],
         "networkSecurityGroup": {
-          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-hashcat-cybersec')]"
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', ,variables('nsgname'))]"
         }
       }
     },
     {
       "apiVersion": "2017-03-01",
       "type": "Microsoft.Network/networkSecurityGroups",
-      "name": "rg-hashcat-cybersec",
+      "name": "[variables('nsgname')]",
       "location": "[resourceGroup().location]",
       "tags": {
         "displayName": "NSG - Front End"
