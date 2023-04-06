@@ -25,9 +25,9 @@
   },
   "variables": {
     "nicName": "nic-hashcat-cybersec",
-    "addressPrefix": "192.168.2.0/24",
+    "addressPrefix": "192.168.2.0/23",
     "subnetName": "Subnet",
-    "subnetPrefix": "192.168.2.0/27",
+    "subnetPrefix": "192.168.2.0/24",
     "publicIPAddressName": "pip-hashcat-cybersec",
     "publicIPAddressType": "Dynamic",
     "vmName": "vm-hashcat-cybersec",
