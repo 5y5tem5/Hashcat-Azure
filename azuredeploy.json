@@ -4,7 +4,7 @@
   "parameters": {
     "virtualMachineName": {
       "type": "string",
-      "defaultValue": "HashcatVM",
+      "defaultValue": "vm-hashcat-cybersec",
       "minLength": 1
     },
     "vmSize": {
@@ -12,17 +12,7 @@
       "defaultValue": "Standard_NV6_Promo",
       "metadata": {
         "description": "VM size for the hashcat server. (see https://azureprice.net/)"
-      },
-      "allowedValues": [
-        "Standard_NV6_Promo",
-        "Standard_NV6",
-        "Standard_NV12_Promo",
-        "Standard_NV12",
-        "Standard_NV24_Promo",
-        "Standard_NV24",
-        "Standard_NV6s_v2",
-        "Standard_NV12s_v2"
-      ]
+      }
     },
     "adminUsername": {
       "type": "string",
@@ -34,14 +24,14 @@
     }
   },
   "variables": {
-    "nicName": "HashcatNetworkInterface",
-    "addressPrefix": "10.0.0.0/16",
+    "nicName": "nic-hashcat-cybersec",
+    "addressPrefix": "192.168.2.0/24",
     "subnetName": "Subnet",
-    "subnetPrefix": "10.0.0.0/24",
-    "publicIPAddressName": "HashcatPublicIP",
+    "subnetPrefix": "192.168.2.0/27",
+    "publicIPAddressName": "pip-hashcat-cybersec",
     "publicIPAddressType": "Dynamic",
-    "vmName": "HashcatVM",
-    "virtualNetworkName": "HashcatNetwork",
+    "vmName": "vm-hashcat-cybersec",
+    "virtualNetworkName": "vnet-hashcat-cybersec",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]"
   },
@@ -99,14 +89,14 @@
           }
         ],
         "networkSecurityGroup": {
-          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'HashcatNSG')]"
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-hashcat-cybersec')]"
         }
       }
     },
     {
       "apiVersion": "2017-03-01",
       "type": "Microsoft.Network/networkSecurityGroups",
-      "name": "HashcatNSG",
+      "name": "rg-hashcat-cybersec",
       "location": "[resourceGroup().location]",
       "tags": {
         "displayName": "NSG - Front End"
@@ -120,7 +110,7 @@
               "protocol": "Tcp",
               "sourcePortRange": "*",
               "destinationPortRange": "22",
-              "sourceAddressPrefix": "Internet",
+              "sourceAddressPrefix": "168.235.0.0/18",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 101,
@@ -196,7 +186,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://raw.githubusercontent.com/carlmon/Hashcat-Azure/master/azure-entrypoint.sh"
+            "https://raw.githubusercontent.com/5y5tem5/Hashcat-Azure/master/azure-entrypoint.sh"
           ],
           "commandToExecute": "./azure-entrypoint.sh"
         }
