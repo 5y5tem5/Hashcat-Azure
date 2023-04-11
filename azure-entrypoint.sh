@@ -31,6 +31,7 @@ snap install john-the-ripper
 
 # Install and reference some wordlists
 wget --quiet -O /opt/rockyou.txt https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt
+wget --quiet -O /opt/OneRuleToRuleThemAll.rule https://raw.githubusercontent.com/NotSoSecure/password_cracking_rules/master/OneRuleToRuleThemAll.rule
 
 cat <<EOF > /opt/wordlists.txt
 Get some additional wordlists here:
